@@ -16,7 +16,7 @@ import type { List, Numeric } from '@flex-development/mark/core'
  *
  * @see {@linkcode List}
  *
- * @template {unknown} T
+ * @template {any} T
  *  The list item type
  *
  * @this {void}
