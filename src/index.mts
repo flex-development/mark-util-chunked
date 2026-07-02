@@ -3,4 +3,4 @@
  * @module mark-util-chunked
  */
 
-export {}
+export { default as splice } from './splice.mts'
