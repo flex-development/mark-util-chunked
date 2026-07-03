@@ -1,7 +1,7 @@
 {
   "name": "@flex-development/mark-util-chunked",
   "description": "mark utility to splice and push into giant arrays",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "keywords": [
     "chunk",
     "mark",
