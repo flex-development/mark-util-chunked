@@ -73,7 +73,25 @@ In browsers with [`esm.sh`][esmsh]:
 
 ## Use
 
-**TODO**: use
+```ts
+import { push, splice } from '@flex-development/mark-util-chunked'
+import { ev } from '@flex-development/mark-util-symbol'
+import type { Token } from '@flex-development/mark'
+
+// ...
+
+const token: Token = events[open][1]
+
+// ...
+
+next = push(next, [[ev.enter, token, context], [ev.exit, token, context]])
+
+// ...
+
+splice(events, open - 1, index - open + 3, next)
+
+// ...
+```
 
 ## API
 
@@ -82,11 +100,55 @@ There is no default export.
 
 ### `push<T>(list, items)`
 
-**TODO**: `push<T>(list, items)`
+Append items to the end of `list`.
+
+Items are added in batches to prevent V8 from hanging.\
+When `list` is empty, `items` is returned to prevent a potentially expensive operation.
+
+#### Type Parameters
+
+- `T` (`any`)
+  — The list item type
+
+#### Parameters
+
+- `list` (`T[]`)
+  — the list to operate on
+- `items` (`T[]`)
+  — the items to inject into `list`
+
+#### Returns
+
+(`T[]`) `items` when `list` is empty, `list` with appended items otherwise
 
 ### `splice<T>(list, start, remove[, items])`
 
-**TODO**: `splice<T>(list, start, remove[, items])`
+Like [`Array#splice`][array-splice], but smarter.
+
+Remove items from `list` and, if necessary, insert new `items` in their place, returning the deleted elements.
+
+> 👉 **Note**: `Array#splice` takes all items to be inserted as individual arguments which causes a stack overflow in V8
+> when trying to insert a large number of items (i.e. 100k).
+
+#### Type Parameters
+
+- `T` (`any`)
+  — The list item type
+
+#### Parameters
+
+- `list` (`T[]`)
+  — the list to operate on
+- `start` ([`Numeric`][numeric] | `number`)
+  — the index in `list` to remove and/or insert items at (can be negative)
+- `remove` ([`Numeric`][numeric] | `number`)
+  — the number of items to remove
+- `items` ([`List<T>`][list] | `null` | `undefined`, optional)
+  — the items to inject into `list`
+
+#### Returns
+
+(`T[]`) The list of removed items
 
 ## Types
 
@@ -121,15 +183,21 @@ Support long-term stability by sponsoring Flex Development.
 
 [api-splice]: #splicetlist-start-remove-items
 
+[array-splice]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+
 [esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
 [esmsh]: https://esm.sh
+
+[list]: https://github.com/flex-development/mark/blob/main/src/core/types/list.mts
 
 [mark-compiler]: https://github.com/flex-development/mark-compiler
 
 [mark-parser]: https://github.com/flex-development/mark-tokenizer
 
 [mark]: https://github.com/flex-development/mark
+
+[numeric]: https://github.com/flex-development/mark/blob/main/src/core/types/numeric.mts
 
 [semver]: https://semver.org
 

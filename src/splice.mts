@@ -7,6 +7,8 @@ import { constants } from '@flex-development/mark-util-symbol'
 import type { List, Numeric } from '@flex-development/mark/core'
 
 /**
+ * Like {@linkcode Array.splice}, but smarter.
+ *
  * Remove items from `list` and, if necessary, insert new `items` in their
  * place, returning the deleted elements.
  *
@@ -66,7 +68,7 @@ function splice<T>(
     // chunk if there are at least `v8MaxSafeChunkSize` items.
 
     /**
-     * Chunk offset.
+     * The index to slice {@linkcode items} at.
      *
      * @var {number} k
      */
